@@ -1,0 +1,36 @@
+.formContainner {
+  padding: 20px auto;
+  box-shadow: 0 0 5px rgb(118, 219, 206);
+  margin: 10px;
+  min-width: 320px;
+  max-width: 800px;
+}
+.formHeader {
+  text-align: center;
+}
+
+.loginForm {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.iputName {
+}
+.input {
+  padding: 10px;
+}
+
+.inputValid {
+  border: 2px solid rgb(0, 255, 0);
+}
+
+.inputInvalid {
+  border: 2px solid rgb(255, 0, 0);
+}
