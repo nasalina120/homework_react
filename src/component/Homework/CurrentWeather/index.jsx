@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import getWeather from "./app/index";
 import ChangeUnit from "./changeUnit";
 import { TempUnitContext, WindUnitContext } from "./context";
+import { FaTemperatureLow, FaTemperatureHigh } from "react-icons/fa";
 
 export default class CurrentWeather extends Component {
   constructor(props) {
@@ -82,6 +83,7 @@ export default class CurrentWeather extends Component {
           <div>
             <p>
               temperature: {temperature} {units.temperature_2m}
+              {temperature <= 0 ? <FaTemperatureLow /> : <FaTemperatureHigh />}
             </p>
             <p>
               windSpeed: {windSpeed} {units.wind_speed_10m}
