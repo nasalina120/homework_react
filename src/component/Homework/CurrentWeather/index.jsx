@@ -25,9 +25,9 @@ export default class CurrentWeather extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const { tempUnit } = this.state;
+    const { tempUnit, windUnit } = this.state;
 
-    if (tempUnit !== prevState.tempUnit) {
+    if (tempUnit !== prevState.tempUnit || windUnit !== prevState.windUnit) {
       this.load();
     }
   }
@@ -53,9 +53,20 @@ export default class CurrentWeather extends Component {
   changeTempUnit = ({ target: { value: newtempUnit } }) => {
     return this.setState({ tempUnit: newtempUnit });
   };
+
+  changeWindUnit = ({ target: { value: newWindUnit } }) => {
+    return this.setState({ windUnit: newWindUnit });
+  };
   render() {
-    const { temperature, windSpeed, units, error, isFetching, tempUnit } =
-      this.state;
+    const {
+      temperature,
+      windSpeed,
+      units,
+      error,
+      isFetching,
+      tempUnit,
+      windUnit,
+    } = this.state;
 
     return (
       <>
@@ -75,6 +86,11 @@ export default class CurrentWeather extends Component {
             <select value={tempUnit} onChange={this.changeTempUnit}>
               <option value="fahrenheit">fahrenheit</option>
               <option value="celsius">celsius</option>
+            </select>
+
+            <select value={windUnit} onChange={this.changeWindUnit}>
+              <option value="kmh">km/h</option>
+              <option value="ms">m/s</option>
             </select>
           </div>
         )}
