@@ -1,0 +1,54 @@
+$bg-main: #5c8bf0
+$bg-panel: #a5d8ff
+$text-color: #000000
+
+.container
+  display: flex
+  gap: 15px
+  background-color: $bg-main
+  padding: 15px
+  border-radius: 14px
+  max-width: 650px
+  width: 100%
+  font-family: sans-serif
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12)
+  box-sizing: border-box
+
+ 
+.panel
+  flex: 1
+  background-color: $bg-panel
+  border-radius: 12px
+  padding: 20px
+  color: $text-color
+  display: flex
+  flex-direction: column
+  justify-content: center
+
+ 
+.settings
+  @extend .panel
+
+ 
+.info
+  @extend .panel
+  align-items: center
+
+  h2
+    font-size: 18px
+    font-weight: bold
+    margin: 0 0 15px 0
+
+.data
+  display: flex
+  flex-direction: column
+  gap: 8px
+  font-size: 16px
+
+.row
+  display: flex
+  align-items: center
+  gap: 8px
+  
+  svg
+    font-size: 20px

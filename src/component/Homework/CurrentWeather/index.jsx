@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import getWeather from "./app/index";
 import ChangeUnit from "./changeUnit";
 import { TempUnitContext, WindUnitContext } from "./context";
-import { FaTemperatureLow, FaTemperatureHigh } from "react-icons/fa";
+import { FaTemperatureLow, FaTemperatureHigh, FaWind } from "react-icons/fa";
+import styles from "./CurrentWeather.module.sass";
 
 export default class CurrentWeather extends Component {
   constructor(props) {
@@ -12,7 +13,6 @@ export default class CurrentWeather extends Component {
       latitude: 52.52,
       longitude: 13.41,
       tempUnit: "fahrenheit",
-
       windUnit: "ms",
 
       temperature: null,
@@ -34,6 +34,7 @@ export default class CurrentWeather extends Component {
       this.load();
     }
   }
+
   load = () => {
     const { latitude, longitude, tempUnit, windUnit } = this.state;
     this.setState({ isFetching: true });
@@ -79,25 +80,41 @@ export default class CurrentWeather extends Component {
 
         {isFetching && <div>Loading. Please wait...</div>}
 
-        {!error && !isFetching && (
-          <div>
-            <p>
-              temperature: {temperature} {units.temperature_2m}
-              {temperature <= 0 ? <FaTemperatureLow /> : <FaTemperatureHigh />}
-            </p>
-            <p>
-              windSpeed: {windSpeed} {units.wind_speed_10m}
-            </p>
-
-            <TempUnitContext.Provider
-              value={{ changeTempUnit: this.changeTempUnit, tempUnit }}
-            >
-              <WindUnitContext.Provider
-                value={{ changeWindUnit: this.changeWindUnit, windUnit }}
+        {!error && !isFetching && units && (
+          <div className={styles.container}>
+            <div className={styles.settings}>
+              <TempUnitContext.Provider
+                value={{ changeTempUnit: this.changeTempUnit, tempUnit }}
               >
-                <ChangeUnit />
-              </WindUnitContext.Provider>
-            </TempUnitContext.Provider>
+                <WindUnitContext.Provider
+                  value={{ changeWindUnit: this.changeWindUnit, windUnit }}
+                >
+                  <ChangeUnit />
+                </WindUnitContext.Provider>
+              </TempUnitContext.Provider>
+            </div>
+
+            <div className={styles.info}>
+              <h2>Current Weather</h2>
+              <div className={styles.data}>
+                <div className={styles.row}>
+                  {temperature <= 0 ? (
+                    <FaTemperatureLow />
+                  ) : (
+                    <FaTemperatureHigh />
+                  )}
+                  <span>
+                    temperature: {temperature} {units.temperature_2m}
+                  </span>
+                </div>
+                <div className={styles.row}>
+                  <FaWind />
+                  <span>
+                    windSpeed: {windSpeed} {units.wind_speed_10m}
+                  </span>
+                </div>
+              </div>
+            </div>
           </div>
         )}
       </>
