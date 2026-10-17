@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import getWeather from "./app/index";
+import ChangeUnit from "./changeUnit";
+import { TempUnitContext, WindUnitContext } from "./context";
 
 export default class CurrentWeather extends Component {
   constructor(props) {
@@ -50,13 +52,15 @@ export default class CurrentWeather extends Component {
       .catch((e) => this.setState({ error: e }))
       .finally(() => this.setState({ isFetching: false }));
   };
+
   changeTempUnit = ({ target: { value: newtempUnit } }) => {
-    return this.setState({ tempUnit: newtempUnit });
+    this.setState({ tempUnit: newtempUnit });
   };
 
   changeWindUnit = ({ target: { value: newWindUnit } }) => {
-    return this.setState({ windUnit: newWindUnit });
+    this.setState({ windUnit: newWindUnit });
   };
+
   render() {
     const {
       temperature,
@@ -83,15 +87,15 @@ export default class CurrentWeather extends Component {
               windSpeed: {windSpeed} {units.wind_speed_10m}
             </p>
 
-            <select value={tempUnit} onChange={this.changeTempUnit}>
-              <option value="fahrenheit">fahrenheit</option>
-              <option value="celsius">celsius</option>
-            </select>
-
-            <select value={windUnit} onChange={this.changeWindUnit}>
-              <option value="kmh">km/h</option>
-              <option value="ms">m/s</option>
-            </select>
+            <TempUnitContext.Provider
+              value={{ changeTempUnit: this.changeTempUnit, tempUnit }}
+            >
+              <WindUnitContext.Provider
+                value={{ changeWindUnit: this.changeWindUnit, windUnit }}
+              >
+                <ChangeUnit />
+              </WindUnitContext.Provider>
+            </TempUnitContext.Provider>
           </div>
         )}
       </>
