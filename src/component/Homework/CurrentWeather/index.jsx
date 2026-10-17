@@ -9,6 +9,7 @@ export default class CurrentWeather extends Component {
       latitude: 52.52,
       longitude: 13.41,
       tempUnit: "fahrenheit",
+
       windUnit: "ms",
 
       temperature: null,
@@ -21,6 +22,14 @@ export default class CurrentWeather extends Component {
 
   componentDidMount() {
     this.load();
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    const { tempUnit } = this.state;
+
+    if (tempUnit !== prevState.tempUnit) {
+      this.load();
+    }
   }
   load = () => {
     const { latitude, longitude, tempUnit, windUnit } = this.state;
@@ -41,8 +50,13 @@ export default class CurrentWeather extends Component {
       .catch((e) => this.setState({ error: e }))
       .finally(() => this.setState({ isFetching: false }));
   };
+  changeTempUnit = ({ target: { value: newtempUnit } }) => {
+    return this.setState({ tempUnit: newtempUnit });
+  };
   render() {
-    const { temperature, windSpeed, units, error, isFetching } = this.state;
+    const { temperature, windSpeed, units, error, isFetching, tempUnit } =
+      this.state;
+
     return (
       <>
         {error && <div>!!!ERROR!!! {JSON.stringify(error)}</div>}
@@ -57,6 +71,11 @@ export default class CurrentWeather extends Component {
             <p>
               windSpeed: {windSpeed} {units.wind_speed_10m}
             </p>
+
+            <select value={tempUnit} onChange={this.changeTempUnit}>
+              <option value="fahrenheit">fahrenheit</option>
+              <option value="celsius">celsius</option>
+            </select>
           </div>
         )}
       </>
